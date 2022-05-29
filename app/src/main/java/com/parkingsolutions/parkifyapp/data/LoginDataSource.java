@@ -1,5 +1,6 @@
 package com.parkingsolutions.parkifyapp.data;
 
+import com.koushikdutta.ion.Ion;
 import com.parkingsolutions.parkifyapp.data.model.LoggedInUser;
 
 import java.io.IOException;
@@ -12,6 +13,9 @@ public class LoginDataSource {
     public Result<LoggedInUser> login(String username, String password) {
 
         try {
+            Ion.with(this)
+                    .load("POST", "http://localhost:8080/login/user")
+                    .set
             // TODO: handle loggedInUser authentication
             LoggedInUser fakeUser =
                     new LoggedInUser(
