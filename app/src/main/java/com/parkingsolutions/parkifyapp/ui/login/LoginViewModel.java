@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.content.Context;
 import android.util.Patterns;
 
 import com.parkingsolutions.parkifyapp.data.LoginRepository;
 import com.parkingsolutions.parkifyapp.data.Result;
+import com.parkingsolutions.parkifyapp.data.model.AuthorizedUser;
 import com.parkingsolutions.parkifyapp.data.model.LoggedInUser;
 import com.parkingsolutions.parkifyapp.R;
 
@@ -31,11 +33,11 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+        Result<AuthorizedUser> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            AuthorizedUser data = ((Result.Success<AuthorizedUser>) result).getData();
+            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getName())));
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
