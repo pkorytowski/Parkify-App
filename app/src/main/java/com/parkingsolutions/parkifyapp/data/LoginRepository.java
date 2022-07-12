@@ -3,6 +3,7 @@ package com.parkingsolutions.parkifyapp.data;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.parkingsolutions.parkifyapp.DrawerActivity;
 import com.parkingsolutions.parkifyapp.MainActivity;
 import com.parkingsolutions.parkifyapp.data.model.AuthorizedUser;
 

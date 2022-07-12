@@ -26,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (prefs.getBoolean("isLogin", false)) {
 
-            //startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             setContentView(R.layout.activity_main);
         }
