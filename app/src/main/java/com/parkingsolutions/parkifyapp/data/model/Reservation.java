@@ -1,5 +1,8 @@
 package com.parkingsolutions.parkifyapp.data.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.parkingsolutions.parkifyapp.common.ReservationStatus;
 
 import java.time.LocalDateTime;
@@ -11,19 +14,26 @@ public class Reservation {
     private String parkingId;
     private String laneName;
     private ReservationStatus reservationStatus;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime reservationStart;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime reservationEnd;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime occupationStart;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime occupationEnd;
 
-    public Reservation(String userId,
-                       String parkingId,
-                       String laneName,
-                       ReservationStatus reservationStatus,
-                       LocalDateTime reservationStart,
-                       LocalDateTime reservationEnd,
-                       LocalDateTime occupationStart,
-                       LocalDateTime occupationEnd) {
+    @JsonCreator
+    public Reservation(@JsonProperty("id") String id,
+                       @JsonProperty("userId") String userId,
+                       @JsonProperty("parkingId") String parkingId,
+                       @JsonProperty("laneName") String laneName,
+                       @JsonProperty("reservationStatus") ReservationStatus reservationStatus,
+                       @JsonProperty("reservationStart") LocalDateTime reservationStart,
+                       @JsonProperty("reservationEnd") LocalDateTime reservationEnd,
+                       @JsonProperty("occupationStart") LocalDateTime occupationStart,
+                       @JsonProperty("occupationEnd") LocalDateTime occupationEnd) {
+        this.id = id;
         this.userId = userId;
         this.parkingId = parkingId;
         this.laneName = laneName;

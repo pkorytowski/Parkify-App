@@ -27,8 +27,10 @@ public class HttpRequest {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.context);
 
         try {
-            URL obj = new URL(address+"path");
+            URL obj = new URL(address + path);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setReadTimeout(10000);
+            con.setConnectTimeout(15000);
             con.setRequestMethod("GET");
             con.setRequestProperty("Authorization", prefs.getString("token", ""));
             //con.setRequestProperty("User-Agent", USER_AGENT);

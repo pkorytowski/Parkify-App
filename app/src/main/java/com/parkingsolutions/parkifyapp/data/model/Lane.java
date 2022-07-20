@@ -1,14 +1,20 @@
 package com.parkingsolutions.parkifyapp.data.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Lane {
     private String name;
     private int size;
     private int availableSpots;
 
-    public Lane(String name, int size) {
+    @JsonCreator
+    public Lane(@JsonProperty("name") String name,
+                @JsonProperty("size") int size,
+                @JsonProperty("availableSpots") int availableSpots) {
         this.name = name;
         this.size = size;
-        this.availableSpots = size;
+        this.availableSpots = availableSpots;
     }
 
     public String getName() {

@@ -7,13 +7,12 @@
     tools:context=".ui.home.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/home_recycler"
-        android:layout_width="361dp"
-        android:layout_height="686dp"
-        android:layout_marginStart="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:id="@+id/recycler"
+        android:layout_width="302dp"
+        android:layout_height="604dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="63dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

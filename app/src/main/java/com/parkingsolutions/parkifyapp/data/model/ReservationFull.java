@@ -1,10 +1,14 @@
 package com.parkingsolutions.parkifyapp.data.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ReservationFull {
     Reservation reservation;
     Parking parking;
 
-    public ReservationFull(Reservation reservation, Parking parking) {
+    @JsonCreator
+    public ReservationFull(@JsonProperty("reservation") Reservation reservation, @JsonProperty("parking") Parking parking) {
         this.reservation = reservation;
         this.parking = parking;
     }

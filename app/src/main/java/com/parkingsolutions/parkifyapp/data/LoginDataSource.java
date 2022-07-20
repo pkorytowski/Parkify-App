@@ -8,7 +8,6 @@ import com.koushikdutta.async.http.BasicNameValuePair;
 import com.koushikdutta.async.http.NameValuePair;
 import com.parkingsolutions.parkifyapp.common.JSONMapper;
 import com.parkingsolutions.parkifyapp.data.model.AuthorizedUser;
-import com.parkingsolutions.parkifyapp.data.model.LoggedInUser;
 
 import org.json.JSONObject;
 

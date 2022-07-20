@@ -1,5 +1,8 @@
 package com.parkingsolutions.parkifyapp.data.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,15 +23,15 @@ public class Parking {
 
     public Parking() {}
 
-
-    public Parking(String ownerId,
-                   String name,
-                   String city,
-                   String street,
-                   String number,
-                   String postalcode,
-                   String country,
-                   List<Lane> lanes){
+    @JsonCreator
+    public Parking(@JsonProperty("ownerid") String ownerId,
+                   @JsonProperty("name") String name,
+                   @JsonProperty("city") String city,
+                   @JsonProperty("street") String street,
+                   @JsonProperty("number") String number,
+                   @JsonProperty("postalcode") String postalcode,
+                   @JsonProperty("country") String country,
+                   @JsonProperty("lanes")List<Lane> lanes) {
         this.ownerId = ownerId;
         this.name = name;
         this.city = city;

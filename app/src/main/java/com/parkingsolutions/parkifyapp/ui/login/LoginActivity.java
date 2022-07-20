@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parkingsolutions.parkifyapp.DrawerActivity;
+import com.parkingsolutions.parkifyapp.MainActivity;
 import com.parkingsolutions.parkifyapp.R;
 import com.parkingsolutions.parkifyapp.databinding.ActivityLoginBinding;
 
@@ -128,9 +129,10 @@ public class LoginActivity extends AppCompatActivity {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         // TODO : initiate successful logged in experience
-        Intent intent = new Intent(LoginActivity.this, DrawerActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent(MainActivity.context, DrawerActivity.class);
         finish();
+        startActivity(intent);
+
 
     }
 

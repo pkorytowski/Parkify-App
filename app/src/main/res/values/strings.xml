@@ -33,4 +33,15 @@
     <string name="menu_profiles">Profiles</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_drawer">DrawerActivity</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="home_recycler_row_button_occupy">Occupy</string>
+    <string name="home_recycler_row_button_cancel">Cancel</string>
+    <string name="home_recycler_row_button_extend">Extend</string>
+    <string name="hone_recycler_row_reservation_other"></string>
+    <string name="home_recycler_row_reservation_time" />
+    <string name="home_recycler_row_reservation_lane" />
+    <string name="home_recycler_row_reservation_address" />
+    <string name="home_recycler_row_reservation_status" />
 </resources>
