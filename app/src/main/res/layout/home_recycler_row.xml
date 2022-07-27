@@ -3,46 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp">
 
     <TextView
+        app:backgroundTint="@null"
         android:id="@+id/ReservationStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/home_recycler_row_reservation_status" />
 
     <TextView
+        app:backgroundTint="@null"
         android:id="@+id/ReservationAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/home_recycler_row_reservation_address" />
 
     <TextView
+        app:backgroundTint="@null"
         android:id="@+id/ReservationLane"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/home_recycler_row_reservation_lane" />
 
     <TextView
+        app:backgroundTint="@null"
         android:id="@+id/ReservationTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/home_recycler_row_reservation_time" />
 
     <TextView
+        app:backgroundTint="@null"
         android:id="@+id/ReservationOther"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/hone_recycler_row_reservation_other" />
 
     <LinearLayout
+        app:backgroundTint="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Occupy"
+            app:backgroundTint="@null"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,21 +59,25 @@
             android:text="@string/home_recycler_row_button_occupy"
             tools:ignore="TextContrastCheck" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Extend"
+            app:backgroundTint="@null"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/home_recycler_row_button_extend"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:background="#FFEB3B"
+            android:text="@string/home_recycler_row_button_extend" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Cancel"
+            app:backgroundTint="@null"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/home_recycler_row_button_cancel"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:background="#F44336"
+            android:text="@string/home_recycler_row_button_cancel" />
     </LinearLayout>
 
 </LinearLayout>

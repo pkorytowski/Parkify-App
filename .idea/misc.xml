@@ -35,11 +35,14 @@
         <entry key="app/src/main/res/layout/activity_drawer.xml" value="0.2223731884057971" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2223731884057971" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2223731884057971" />
+        <entry key="app/src/main/res/layout/app_bar_drawer.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_drawer.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/home_recycler_occupied_row.xml" value="0.15602836879432624" />
         <entry key="app/src/main/res/layout/home_recycler_row.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/layout/nav_header_drawer.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/menu/drawer.xml" value="0.1" />
       </map>
     </option>
   </component>

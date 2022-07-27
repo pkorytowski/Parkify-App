@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
             startActivity(intent);
-            finish();
+            //finish();
         } else {
             setContentView(R.layout.activity_main);
         }

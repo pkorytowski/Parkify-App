@@ -1,14 +1,11 @@
 package com.parkingsolutions.parkifyapp.data.request;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.parkingsolutions.parkifyapp.MainActivity;
-import com.parkingsolutions.parkifyapp.data.Result;
-import com.parkingsolutions.parkifyapp.data.model.AuthorizedUser;
 import com.parkingsolutions.parkifyapp.data.model.ReservationFull;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -21,9 +18,6 @@ public class ReservationRequest {
     }
 
     public List<ReservationFull> getFullReservations() {
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.context);
-
         String path = "reservation/active";
 
         String resp = httpRequest.get(path);
@@ -38,6 +32,19 @@ public class ReservationRequest {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public boolean extendReservationBy15Minutes(String reservationId) {
+        String path = "reservation/extend";
+
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("id", reservationId);
+            requestBody.put("time", 15);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return httpRequest.put(path, requestBody);
     }
 
 }

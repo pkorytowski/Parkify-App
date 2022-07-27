@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/ReservationStatusOccupied"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home_recycler_row_reservation_status" />
+
+    <TextView
+        android:id="@+id/ReservationAddressOccupied"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home_recycler_row_reservation_address" />
+
+    <TextView
+        android:id="@+id/ReservationLaneOccupied"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home_recycler_row_reservation_lane" />
+
+    <TextView
+        android:id="@+id/ReservationTimeOccupied"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home_recycler_row_reservation_time" />
+
+    <TextView
+        android:id="@+id/ReservationOtherOccupied"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hone_recycler_row_reservation_other" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ExtendOccupied"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFEB3B"
+            android:text="@string/home_recycler_row_button_extend" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/EndOccupied"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#F44336"
+            android:text="@string/home_recycler_row_button_end" />
+    </LinearLayout>
+
+</LinearLayout>

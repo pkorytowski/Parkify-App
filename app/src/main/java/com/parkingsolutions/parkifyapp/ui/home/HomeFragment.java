@@ -11,8 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.parkingsolutions.parkifyapp.MainActivity;
+import com.parkingsolutions.parkifyapp.DrawerActivity;
 import com.parkingsolutions.parkifyapp.data.model.ReservationFull;
 import com.parkingsolutions.parkifyapp.data.request.ReservationRequest;
 import com.parkingsolutions.parkifyapp.databinding.FragmentHomeBinding;
@@ -31,15 +32,22 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        final SwipeRefreshLayout layout = binding.homeSwipeRefresh;
+        layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshRecycler();
+                layout.setRefreshing(false);
+            }
+        });
         //final TextView textView = binding.textHome;
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         final RecyclerView recyclerView = binding.recycler;
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.context));
+        recyclerView.setLayoutManager(new LinearLayoutManager(DrawerActivity.context));
         List<ReservationFull> reservations = getReservations();
         System.out.println(reservations.size());
-        recyclerViewAdapter = new RecyclerViewAdapter(MainActivity.context, reservations);
+        recyclerViewAdapter = new RecyclerViewAdapter(DrawerActivity.context, reservations, this);
         recyclerViewAdapter.setClickListener(this);
         recyclerView.setAdapter(recyclerViewAdapter);
         return root;
@@ -51,6 +59,14 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
         binding = null;
     }
 
+    public void refreshRecycler() {
+        final RecyclerView recyclerView = binding.recycler;
+        List<ReservationFull> reservations = getReservations();
+        recyclerViewAdapter = new RecyclerViewAdapter(DrawerActivity.context, reservations, this);
+        recyclerViewAdapter.setClickListener(this);
+        recyclerView.setAdapter(recyclerViewAdapter);
+    }
+
 
     public List<ReservationFull> getReservations() {
         ReservationRequest reservationRequest = new ReservationRequest();
@@ -59,7 +75,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(MainActivity.context, "You clicked " + recyclerViewAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(DrawerActivity.context, "You clicked " + recyclerViewAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
     }
 
 }

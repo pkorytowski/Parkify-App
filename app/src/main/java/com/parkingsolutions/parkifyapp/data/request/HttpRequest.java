@@ -4,15 +4,31 @@ package com.parkingsolutions.parkifyapp.data.request;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.koushikdutta.async.http.BasicNameValuePair;
+import com.koushikdutta.async.http.NameValuePair;
 import com.koushikdutta.ion.builder.Builders;
 import com.parkingsolutions.parkifyapp.MainActivity;
+import com.parkingsolutions.parkifyapp.data.Result;
+import com.parkingsolutions.parkifyapp.data.model.AuthorizedUser;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class HttpRequest {
 
@@ -55,5 +71,44 @@ public class HttpRequest {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean put(String path, JSONObject content) {
+
+        StringBuilder response = new StringBuilder();
+        try {
+            URL obj = new URL(address + path);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("PUT");
+            conn.setRequestProperty("Content-Type","application/json");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            OutputStream os = conn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, StandardCharsets.UTF_8));
+
+            writer.write(content.toString());
+            writer.flush();
+            writer.close();
+            os.close();
+            //conn.connect();
+            int responseCode = conn.getResponseCode();
+            Log.d("Response code", "" + responseCode);
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
+                conn.disconnect();
+                return true;
+            } else {
+                conn.disconnect();
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //conn.connect();
+        return false;
     }
 }
