@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.parkingsolutions.parkifyapp.R;
+import com.parkingsolutions.parkifyapp.common.ReservationStatus;
 import com.parkingsolutions.parkifyapp.data.model.ReservationFull;
 import com.parkingsolutions.parkifyapp.data.request.ReservationRequest;
 
@@ -134,6 +135,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView reservationLane;
         TextView reservationTime;
         TextView reservationOther;
+        Button occupyButton;
         Button extendButton;
         AlertDialog.Builder builder;
 
@@ -146,6 +148,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             reservationTime = itemView.findViewById(R.id.ReservationTime);
             reservationOther = itemView.findViewById(R.id.ReservationOther);
             itemView.setOnClickListener(this);
+            occupyButton = itemView.findViewById(R.id.Occupy);
+            builder = new AlertDialog.Builder(mInflater.getContext());
+            occupyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    builder.setMessage(R.string.occupy_reservation_msg)
+                            .setCancelable(false)
+                            .setNegativeButton(R.string.btn_no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            })
+                            .setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    boolean result = reservationRequest.changeReservationStatus(reservationId, ReservationStatus.OCCUPIED);
+                                    if (!result) {
+                                        Toast.makeText(mInflater.getContext(), R.string.cannot_change_reservation_status, Toast.LENGTH_SHORT).show();
+                                    }
+                                    par.refreshRecycler();
+                                    dialogInterface.cancel();
+                                }
+                            });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            });
             extendButton = itemView.findViewById(R.id.Extend);
             builder = new AlertDialog.Builder(mInflater.getContext());
             extendButton.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +209,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 }
             });
+
+
+
         }
 
         public void setReservationId(String id) {

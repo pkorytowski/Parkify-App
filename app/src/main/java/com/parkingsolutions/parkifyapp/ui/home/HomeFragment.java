@@ -46,7 +46,6 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
         final RecyclerView recyclerView = binding.recycler;
         recyclerView.setLayoutManager(new LinearLayoutManager(DrawerActivity.context));
         List<ReservationFull> reservations = getReservations();
-        System.out.println(reservations.size());
         recyclerViewAdapter = new RecyclerViewAdapter(DrawerActivity.context, reservations, this);
         recyclerViewAdapter.setClickListener(this);
         recyclerView.setAdapter(recyclerViewAdapter);

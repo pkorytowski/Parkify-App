@@ -2,6 +2,7 @@ package com.parkingsolutions.parkifyapp.data.request;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.parkingsolutions.parkifyapp.common.ReservationStatus;
 import com.parkingsolutions.parkifyapp.data.model.ReservationFull;
 
 import org.json.JSONException;
@@ -41,6 +42,19 @@ public class ReservationRequest {
         try {
             requestBody.put("id", reservationId);
             requestBody.put("time", 15);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return httpRequest.put(path, requestBody);
+    }
+
+    public boolean changeReservationStatus(String reservationId, ReservationStatus status) {
+        String path = "reservation/status";
+
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("id", reservationId);
+            requestBody.put("status", status);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -47,7 +47,9 @@
     <string name="home_recycler_row_button_end">End</string>
 
     <string name="extend_reservation_msg">Extend reservation by 15 minutes?</string>
+    <string name="occupy_reservation_msg">Confirm that you are parked in correct place</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
     <string name="cannot_extend_reservation">Cannot extend reservation</string>
+    <string name="cannot_change_reservation_status">Cannot change reservation status</string>
 </resources>
