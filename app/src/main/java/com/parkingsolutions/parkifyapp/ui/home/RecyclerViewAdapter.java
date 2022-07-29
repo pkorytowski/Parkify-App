@@ -2,18 +2,28 @@ package com.parkingsolutions.parkifyapp.ui.home;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.Fragment;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.parkingsolutions.parkifyapp.R;
@@ -23,8 +33,11 @@ import com.parkingsolutions.parkifyapp.data.request.ReservationRequest;
 
 import org.json.JSONException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -41,6 +54,70 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mData = data;
         reservationRequest = new ReservationRequest();
         this.par = par;
+    }
+
+    public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+        Context context;
+        LocalTime time;
+
+        public TimePickerFragment(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+            return new TimePickerDialog(context,
+                    this,
+                    hour,
+                    minute,
+                    DateFormat.is24HourFormat(context));
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public void onTimeSet(TimePicker view, int hour, int minute) {
+            time = LocalTime.of(hour, minute);
+        }
+
+        public LocalTime getTime() {
+            return time;
+        }
+    }
+
+    public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+        Context context;
+
+        LocalDate date;
+
+        public DatePickerFragment(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            return new DatePickerDialog(context,
+                    this,
+                    year,
+                    month,
+                    day);
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            date = LocalDate.of(year, month, day);
+        }
+
+        public LocalDate getDate() {
+            return date;
+        }
     }
 
     // inflates the row layout from xml when needed
@@ -137,8 +214,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView reservationOther;
         Button occupyButton;
         Button extendButton;
+        Button cancelButton;
         AlertDialog.Builder builder;
-
+        //TimePickerDialog.Builder timeBuilder;
 
         ViewHolderRes(View itemView) {
             super(itemView);
@@ -149,32 +227,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             reservationOther = itemView.findViewById(R.id.ReservationOther);
             itemView.setOnClickListener(this);
             occupyButton = itemView.findViewById(R.id.Occupy);
-            builder = new AlertDialog.Builder(mInflater.getContext());
             occupyButton.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(View view) {
-                    builder.setMessage(R.string.occupy_reservation_msg)
-                            .setCancelable(false)
-                            .setNegativeButton(R.string.btn_no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.cancel();
-                                }
-                            })
-                            .setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    boolean result = reservationRequest.changeReservationStatus(reservationId, ReservationStatus.OCCUPIED);
-                                    if (!result) {
-                                        Toast.makeText(mInflater.getContext(), R.string.cannot_change_reservation_status, Toast.LENGTH_SHORT).show();
-                                    }
-                                    par.refreshRecycler();
-                                    dialogInterface.cancel();
-                                }
-                            });
+                    FragmentManager manager = ((AppCompatActivity) mInflater.getContext()).getSupportFragmentManager();
 
-                    AlertDialog alert = builder.create();
-                    alert.show();
+                    DatePickerFragment dateAlert = new DatePickerFragment(mInflater.getContext());
+                    dateAlert.show(manager, "datePicker");
+                    LocalDate date = dateAlert.getDate();
+
+                    TimePickerFragment timeAlert = new TimePickerFragment(mInflater.getContext());
+                    timeAlert.show(manager, "timePicker");
+                    LocalTime time = timeAlert.getTime();
+                    Toast.makeText(mInflater.getContext(), date.toString() + time.toString(), Toast.LENGTH_SHORT).show();
+
+
                 }
             });
             extendButton = itemView.findViewById(R.id.Extend);
@@ -205,11 +273,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     AlertDialog alert = builder.create();
                     alert.show();
-
-
                 }
             });
+            cancelButton = itemView.findViewById(R.id.Cancel);
+            builder = new AlertDialog.Builder(mInflater.getContext());
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    builder.setMessage(R.string.cancel_reservation_msg)
+                            .setCancelable(false)
+                            .setNegativeButton(R.string.btn_no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            })
+                            .setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    boolean result = reservationRequest.changeReservationStatus(reservationId, ReservationStatus.CANCELED);
+                                    if (!result) {
+                                        Toast.makeText(mInflater.getContext(), R.string.cannot_change_reservation_status, Toast.LENGTH_SHORT).show();
 
+                                    }
+                                    par.refreshRecycler();
+                                    dialogInterface.cancel();
+                                }
+                            });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            });
 
 
         }
@@ -222,9 +317,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
-
-
-
     }
 
     public class ViewHolderOcc extends RecyclerView.ViewHolder implements View.OnClickListener {

@@ -48,6 +48,7 @@
 
     <string name="extend_reservation_msg">Extend reservation by 15 minutes?</string>
     <string name="occupy_reservation_msg">Confirm that you are parked in correct place</string>
+    <string name="cancel_reservation_msg">Are you sure you want to cancel the reservation?</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
     <string name="cannot_extend_reservation">Cannot extend reservation</string>
